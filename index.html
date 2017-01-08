@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Random Quote Generator</title>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+
+
+	<div class="container">
+		<div id="quotebox">
+			<div class="row">
+				<div class="col-l-6 .col-md-offset-3 text-center">
+					<blockquote class="blockquote">
+					<h2>
+						<p id="quote" class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+						</h2>
+						<footer id="sayer" class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+					</blockquote>
+					<button type="button" id="getMessage" class="btn btn-default"><h5>New Quote</h5></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript">
+		colors = ["#2c3e50", "#34495e", "#8e44ad", "#9b59b6", "#c0392b", "#d35400", "#27ae60", "#16a085", "#1abc9c"]
+	</script>
+	<script type="text/javascript">
+		var randomColor = colors[Math.floor(Math.random() * colors.length)];
+		$('html, body').css("background-color",randomColor)
+		$('#quote').css("color",$('html, body').css("background-color"))
+		$('#getMessage').css("background-color",$('html, body').css("background-color"))
+
+
+		$(document).ready(function(){
+			$.getJSON('http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=jsonp&lang=en&jsonp=?', function(data){
+				$("#quote").html(data.quoteText);
+				$("#sayer").html(data.quoteAuthor);
+				console.log(data);
+			});
+		})
+		$('#getMessage').click(function() {
+			$.getJSON('http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=jsonp&lang=en&jsonp=?', function(data){
+				$("#quote").html(data.quoteText);
+				$("#sayer").html(data.quoteAuthor);
+				$('html, body').css("background-color",colors[Math.floor(Math.random() * colors.length)])
+				$('#quote').css("color",$('html, body').css("background-color"))
+						$('#getMessage').css("background-color",$('html, body').css("background-color"))
+
+
+
+				// $(body).css("background-color",colors[Math.floor(Math.random() * colors.length)] + " !important");
+				console.log(data)
+			})
+		})
+	</script>
+
+
+</body>
+</html>
